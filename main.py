@@ -2,7 +2,7 @@ import os
 from telegram import ReplyKeyboardMarkup, Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
 
-TOKEN = os.getenv(7997357489:AAFdRMLu58TBx2CeFzmZtsf_a7t0iuYsbwE)
+TOKEN = os.getenv("7997357489:AAFdRMLu58TBx2CeFzmZtsf_a7t0iuYsbwE")
 
 keyboard = [
     ["Настроение", "Сон"],
