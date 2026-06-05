@@ -8,7 +8,7 @@ from telegram.ext import (
     ContextTypes
 )
 
-TOKEN = os.getenv("7997357489:AAFdRMLu58TBx2CeFzmZtsf_a7t0iuYsbwE")
+TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
 keyboard = [
     ["Настроение", "Сон"],
