@@ -38,9 +38,26 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
     elif text == "Таблетки":
-        await update.message.reply_text(
-            "ты выпила таблетки?"
-        )
+    buttons = InlineKeyboardMarkup([
+        [
+            InlineKeyboardButton(
+                "✅ Выпила",
+callback_data="pills_taken"
+            )
+        ],
+        [
+            InlineKeyboardButton(
+                "💤 Сегодня не нужно",
+                callback_data="pills_skip_day"
+            )
+        ]
+    ])
+
+    await update.message.reply_text(
+        "💊 время таблеток",
+        reply_markup=buttons
+    )
+    
 
     elif text == "Музыка":
         await update.message.reply_text(
