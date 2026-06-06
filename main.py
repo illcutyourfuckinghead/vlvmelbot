@@ -41,7 +41,7 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
     buttons = InlineKeyboardMarkup([
         [
             InlineKeyboardButton(
-                "✅ Выпила",
+                "Выпила",
 callback_data="pills_taken"
             )
         ],
