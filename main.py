@@ -1,11 +1,19 @@
 import os
-from telegram import ReplyKeyboardMarkup, Update
+
+from telegram import (
+    ReplyKeyboardMarkup,
+    Update,
+    InlineKeyboardMarkup,
+    InlineKeyboardButton
+)
+
 from telegram.ext import (
     ApplicationBuilder,
     CommandHandler,
     MessageHandler,
-    filters,
-    ContextTypes
+    CallbackQueryHandler,
+    ContextTypes,
+    filters
 )
 
 TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
@@ -16,7 +24,10 @@ keyboard = [
     ["Поговорить", "Мини-игры"]
 ]
 
-menu = ReplyKeyboardMarkup(keyboard, resize_keyboard=True)
+menu = ReplyKeyboardMarkup(
+    keyboard,
+    resize_keyboard=True
+)
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
@@ -58,27 +69,40 @@ async def message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "💊 время таблеток",
             reply_markup=buttons
         )
-    
-    
 
     elif text == "Музыка":
         await update.message.reply_text(
-            "что сегодня?"
+            "🎧 сегодня тебе подходит что-то странное и ночное"
         )
 
     elif text == "Поговорить":
         await update.message.reply_text(
-            "что такое пупсеночек?"
+            "я слушаю 🌙"
         )
 
     elif text == "Мини-игры":
         await update.message.reply_text(
-            "пока не готово"
+            "🎮 пока не готово"
         )
 
     else:
         await update.message.reply_text(
-            "хорошо"
+            "я тебя услышал"
+        )
+
+async def buttons(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+
+    await query.answer()
+
+    if query.data == "pills_taken":
+        await query.message.reply_text(
+            "умничка 🫶"
+        )
+
+    elif query.data == "pills_skip_day":
+        await query.message.reply_text(
+            "хорошо 🌙"
         )
 
 print("бот запущен 🌙")
@@ -86,11 +110,16 @@ print("бот запущен 🌙")
 app = ApplicationBuilder().token(TOKEN).build()
 
 app.add_handler(CommandHandler("start", start))
+
 app.add_handler(
     MessageHandler(
         filters.TEXT & ~filters.COMMAND,
         message
     )
+)
+
+app.add_handler(
+    CallbackQueryHandler(buttons)
 )
 
 app.run_polling()
